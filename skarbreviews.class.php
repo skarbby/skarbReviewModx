@@ -40,7 +40,7 @@ class SkarbReviews
         if ($id_company = $this->SkarbClear->isExistsCompany(preg_replace('/[^0-9]/', '', $array['item_id']))) return $this->getListReviewsSk(1, $id_company, $array);
     }
     
-
+    
 
 
 
@@ -49,19 +49,19 @@ class SkarbReviews
     public function getListIdReviewsSk($type = 1, $item_id = 0, $limit = 30, $offset = 0, $list_parent = []) 
     { 
         $list_id = [];
-		
-		if (!empty($list_parent)) {
-			$sql = $this->modx->query('SELECT id FROM ' . $this->modx->getTableName('SkarbReview') . ' WHERE thread IN (' . implode(',', $list_parent) . ') AND type = ' . $type . ' AND item_id = ' . $item_id . ' AND hidden = 0 ORDER BY createdon DESC');
-		} else {
-			$sql = $this->modx->query('SELECT id FROM ' . $this->modx->getTableName('SkarbReview') . ' WHERE parent = 0 AND type = ' . $type . ' AND item_id = ' . $item_id . ' AND hidden = 0 ORDER BY updatedon_thread DESC LIMIT ' . $offset . ', ' . $limit);
-		}
-		
+        
+        if (!empty($list_parent)) {
+            $sql = $this->modx->query('SELECT id FROM ' . $this->modx->getTableName('SkarbReview') . ' WHERE thread IN (' . implode(',', $list_parent) . ') AND type = ' . $type . ' AND item_id = ' . $item_id . ' AND hidden = 0 ORDER BY createdon DESC');
+        } else {
+            $sql = $this->modx->query('SELECT id FROM ' . $this->modx->getTableName('SkarbReview') . ' WHERE parent = 0 AND type = ' . $type . ' AND item_id = ' . $item_id . ' AND hidden = 0 ORDER BY updatedon_thread DESC LIMIT ' . $offset . ', ' . $limit);
+        }
+        
         if ($result = $sql->fetchAll(PDO::FETCH_ASSOC)) {
             foreach ($result as $comment) {
                 $list_id[] = $comment['id'];
             }
         }
-		
+        
         return $list_id;
     }
 
@@ -101,7 +101,7 @@ class SkarbReviews
     
 
 
-	//get list reviews
+    //get list reviews
     public function getListReviewsSk($type = 1, $item_id = 0, $array = []) 
     {       
         $limit = (!empty($array['limit'])) ? preg_replace('/[^0-9]/', '', $array['limit']) : 30;
@@ -482,8 +482,8 @@ class SkarbReviews
                 return $this->SkarbAnswer->ReturnAnswer(true, 'success_create_reviews', '', ['item_id' => $item_id, 'id' => $comment['id'], 'parent' => $comment['parent'], 'thread' => $comment['thread'], 'tpl' => $tpl]);
             }
         }
-		
-		return $this->SkarbAnswer->ReturnAnswer(false, 'error', $this->modx->lexicon('sk_error_default'), NULL);
+        
+        return $this->SkarbAnswer->ReturnAnswer(false, 'error', $this->modx->lexicon('sk_error_default'), NULL);
     }
 
 
@@ -537,7 +537,7 @@ class SkarbReviews
             }
             return $this->SkarbAnswer->ReturnAnswer(true, 'success_get_reviews', '', $result_comment);
         }
-		
+        
         return $this->SkarbAnswer->ReturnAnswer(false, 'error', $this->modx->lexicon('sk_error_review_edit_disable'), NULL);
     }
 
@@ -843,7 +843,7 @@ class SkarbReviews
                     }
                 }
             }
-			
+            
             return $this->SkarbAnswer->ReturnAnswer(true, 'success_upload_img_review', NULL, ['path' => str_replace(MODX_BASE_PATH, '', $tmp_dir), 'filename' => $new_image_name, 'item_id' => $item_id, 'idx' => $array['idx']]);
         }
     }
@@ -879,7 +879,7 @@ class SkarbReviews
     //get list img
     public function getListFilesReviewsSk($item_id = 0, $review_id = 0, $tmp = true) 
     {
-		$list_files = [];
+        $list_files = [];
         $tmp_dir = ($tmp) ? $this->tmp_dir . $item_id . '/img/' : $this->file_dir . $item_id . '/reviews/' . $review_id . '/img/';
         if (file_exists($tmp_dir)) {
             $it = new FilesystemIterator($tmp_dir);
@@ -895,7 +895,7 @@ class SkarbReviews
                 $list_files['path'] = str_replace(MODX_BASE_PATH, '', $tmp_dir);
             }
         }
-		
+        
         return $list_files;
     }
 
@@ -956,7 +956,7 @@ class SkarbReviews
                 }
             }
         }
-		
+        
         return $this->SkarbAnswer->ReturnAnswer(true, 'success', $text, NULL);
     }
 
